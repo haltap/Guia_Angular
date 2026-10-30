@@ -1,0 +1,55 @@
+<div style="padding: 20px;">
+  <h2>Registro de Estudiantes</h2>
+  <button (click)="cerrarSesion()" style="float: right;">Cerrar Sesión</button>
+  <p><strong>Total de registros:</strong> {{ estudiantes.length }}</p>
+
+  <form (ngSubmit)="guardarEstudiante()" style="margin-bottom: 20px; background: #f4f4f4; padding: 15px; border-radius: 5px;">
+    <h3>{{ editando ? 'Editar Estudiante' : 'Nuevo Estudiante' }}</h3>
+    <div>
+      <label>Cuenta (conserva ceros): </label><br>
+      <input type="text" [(ngModel)]="estudianteForm.cuenta" name="cuenta" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Nombre: </label><br>
+      <input type="text" [(ngModel)]="estudianteForm.nombre" name="nombre" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Carrera: </label><br>
+      <input type="text" [(ngModel)]="estudianteForm.carrera" name="carrera" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Fecha de Ingreso: </label><br>
+      <input type="date" [(ngModel)]="estudianteForm.fechaIngreso" name="fechaIngreso" required />
+    </div>
+    <button type="submit" style="margin-top: 12px;">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="cancelarEdicion()" *ngIf="editando" style="margin-left: 10px;">Cancelar</button>
+  </form>
+
+  <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;" *ngIf="estudiantes.length > 0">
+    <thead>
+      <tr style="background: #e2e2e2;">
+        <th>ID</th>
+        <th>Cuenta</th>
+        <th>Nombre</th>
+        <th>Carrera</th>
+        <th>Fecha Ingreso</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of estudiantes">
+        <td>{{ e.id }}</td>
+        <td>{{ e.cuenta }}</td>
+        <td>{{ e.nombre }}</td>
+        <td>{{ e.carrera }}</td>
+        <td>{{ e.fechaIngreso }}</td>
+        <td>
+          <button (click)="editarEstudiante(e)">Editar</button>
+          <button (click)="eliminarEstudiante(e.id)" style="margin-left: 5px; color: red;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="estudiantes.length === 0" style="color: gray; font-style: italic;">No hay estudiantes registrados.</p>
+</div>
