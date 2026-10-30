@@ -1,0 +1,57 @@
+<div style="padding: 20px;">
+  <h2>Registro de Mascotas</h2>
+  <button (click)="cerrarSesion()" style="float: right;">Cerrar Sesión</button>
+  <p><strong>Total de registros:</strong> {{ mascotas.length }}</p>
+
+
+  <form (ngSubmit)="guardarMascota()" style="margin-bottom: 20px; background: #f4f4f4; padding: 15px; border-radius: 5px;">
+    <h3>{{ editando ? 'Editar Mascota' : 'Nueva Mascota' }}</h3>
+    <div>
+      <label>Nombre: </label><br>
+      <input type="text" [(ngModel)]="mascotaForm.nombre" name="nombre" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Especie (ej. Perro, Gato): </label><br>
+      <input type="text" [(ngModel)]="mascotaForm.especie" name="especie" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Edad (Años, 0 si es menor de uno): </label><br>
+      <input type="number" [(ngModel)]="mascotaForm.edad" name="edad" min="0" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Propietario: </label><br>
+      <input type="text" [(ngModel)]="mascotaForm.propietario" name="propietario" required />
+    </div>
+    <button type="submit" style="margin-top: 12px;">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="cancelarEdicion()" *ngIf="editando" style="margin-left: 10px;">Cancelar</button>
+  </form>
+
+
+  <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;" *ngIf="mascotas.length > 0">
+    <thead>
+      <tr style="background: #e2e2e2;">
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Edad</th>
+        <th>Propietario</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of mascotas">
+        <td>{{ m.id }}</td>
+        <td>{{ m.nombre }}</td>
+        <td>{{ m.especie }}</td>
+        <td>{{ m.edad }}</td>
+        <td>{{ m.propietario }}</td>
+        <td>
+          <button (click)="editarMascota(m)">Editar</button>
+          <button (click)="eliminarMascota(m.id)" style="margin-left: 5px; color: red;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="mascotas.length === 0" style="color: gray; font-style: italic;">No hay mascotas registradas.</p>
+</div>
