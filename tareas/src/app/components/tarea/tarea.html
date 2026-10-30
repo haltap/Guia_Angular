@@ -1,0 +1,58 @@
+<div style="padding: 20px;">
+  <h2>Agenda de Tareas</h2>
+  <button (click)="cerrarSesion()" style="float: right;">Cerrar Sesión</button>
+  <p><strong>Total de registros:</strong> {{ tareas.length }}</p>
+
+  <form (ngSubmit)="guardarTarea()" style="margin-bottom: 20px; background: #f4f4f4; padding: 15px; border-radius: 5px;">
+    <h3>{{ editando ? 'Editar Tarea' : 'Nueva Tarea' }}</h3>
+    <div>
+      <label>Título: </label><br>
+      <input type="text" [(ngModel)]="tareaForm.titulo" name="titulo" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Descripción: </label><br>
+      <textarea [(ngModel)]="tareaForm.descripcion" name="descripcion" rows="3" required></textarea>
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Fecha Límite: </label><br>
+      <input type="date" [(ngModel)]="tareaForm.fechaLimite" name="fechaLimite" required />
+    </div>
+    <div style="margin-top: 8px;">
+      <label>Estado: </label><br>
+      <select [(ngModel)]="tareaForm.estado" name="estado" required>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Completada">Completada</option>
+      </select>
+    </div>
+    <button type="submit" style="margin-top: 12px;">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="cancelarEdicion()" *ngIf="editando" style="margin-left: 10px;">Cancelar</button>
+  </form>
+
+  <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;" *ngIf="tareas.length > 0">
+    <thead>
+      <tr style="background: #e2e2e2;">
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha Límite</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of tareas">
+        <td>{{ t.id }}</td>
+        <td>{{ t.titulo }}</td>
+        <td>{{ t.descripcion }}</td>
+        <td>{{ t.fechaLimite }}</td>
+        <td>{{ t.estado }}</td>
+        <td>
+          <button (click)="editarTarea(t)">Editar</button>
+          <button (click)="eliminarTarea(t.id)" style="margin-left: 5px; color: red;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="tareas.length === 0" style="color: gray; font-style: italic;">No hay tareas registradas en la agenda.</p>
+</div>
